@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMPDB Data Statistics</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="ss.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-3" href="ampdb-home">AMPDB v1</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-home">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Search</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="ampdb-text-search">Text Search</a></li>
+                            <li><a class="dropdown-item" href="ampdb-specific-search">Specific Text Search</a></li>
+                            <li><a class="dropdown-item" href="ampdb-target-organism-search">Search by Target
+                                    Organism</a></li>
+                            <li><a class="dropdown-item" href="ampdb-pp-search">Search by Physicochemical Properties</a>
+                            </li>
+                            <li><a class="dropdown-item" href="ampdb-composition-search">Search by Protein
+                                    Composition</a>
+                            </li>
+                            <li><a class="dropdown-item" href="ampdb-activity-search">Search by Activity</a></li>
+                            <li><a class="dropdown-item" href="ampdb-advanced-search">Advanced Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="browse-all-data">Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-classification">Classification</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Tools</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                    href="https://ampdb-protein-sequence-alignment-toolbox.streamlit.app/"
+                                    target="_blank">Protein Sequence Alignment Toolbox</a></li>
+                            <li><a class="dropdown-item"
+                                    href="https://ampdb-protein-feature-calculation-toolbox.streamlit.app/"
+                                    target="_blank">Protein Feature Calculation Toolbox</a></li>
+                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="ampdb-data-stat">Statistics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-downloads">Downloads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-news">News/Updates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="developers">Developers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-tutorial">Tutorial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact">Contact</a>
+                    </li>
+                </ul>
+                <form class="d-flex" action="ampdb-quick-search-result" method="get">
+                    <input name="term" class="form-control me-2" type="text" placeholder="Quick Search">
+                    <input type="submit" value="Search" name="search" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </nav>
+    <br><br><br>
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-sm text-center">
+                <h4>AMPDB Data Statistics</h4>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-sm">
+                The statistics are generated by using
+                <a href="https://www.python.org/downloads/" style="text-decoration: none;" class="bb">python3</a>,
+                <a href="https://numpy.org/" style="text-decoration: none;" class="bb">numpy</a>,
+                <a href="https://pandas.pydata.org/" style="text-decoration: none;" class="bb">pandas</a>,
+                <a href="https://www.javascript.com/" style="text-decoration: none;" class="bb">JavaScript</a>, and
+                <a href="https://www.chartjs.org/" style="text-decoration: none;" class="bb">Chart.js</a>. The
+                statistics show the current holdings of AMPDB archive.
+            </div>
+            <div>Currently, the statistics are displayed 14 different categories. Click on the categories to see details
+                statistics and visualize the same.</div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 1%;">
+        <div class="row">
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #f75990;">
+                <a href="ampdb-ds-class" style="text-decoration: none; color: white; font-weight: 500;">by Activity</a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #fff685;">
+                <a href="ampdb-ds-rc" style="text-decoration: none; color: rgb(6, 79, 60); font-weight: 500;">by Residue
+                    Length</a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #00DDFF;">
+                <a href="ampdb-ds-mw" style="text-decoration: none; color: rgb(6, 79, 60); font-weight: 500;">by
+                    Molecular Weight</a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #494D5F;">
+                <a href="ampdb-ds-ai" style="text-decoration: none; color: white; font-weight: 500;">by Aliphatic
+                    Index</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1%;">
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #2a4d69 ;">
+                <a href="ampdb-ds-ii" style="text-decoration: none; color: white; font-weight: 500;">by Instability
+                    Index</a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #ffbbee;">
+                <a href="ampdb-ds-gravy" style="text-decoration: none; color: rgb(6, 79, 60); font-weight: 500;">by
+                    Hydrophobicity (GRAVY)
+                </a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #adcbe3;">
+                <a href="ampdb-ds-hm" style="text-decoration: none; color: rgb(6, 79, 60); font-weight: 500;">by
+                    Hydrophobic Moment</a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #283655;">
+                <a href="ampdb-ds-ip" style="text-decoration: none; color: white; font-weight: 500;">by Isoelectric
+                    Point
+                </a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1%;">
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #4b3832 ;">
+                <a href="ampdb-ds-charge" style="text-decoration: none; color: white; font-weight: 500;">by Charge (at
+                    pH 7)</a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #fff4e6;">
+                <a href="ambdb-ds-aroma" style="text-decoration: none; color: rgb(6, 79, 60); font-weight: 500;">by
+                    Aromaticity
+                </a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #dfe3ee;">
+                <a href="ampdb-ds-phoaa" style="text-decoration: none; color: rgb(6, 79, 60); font-weight: 500;">by
+                    Hydrophobic Amino Acid Count</a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #5e5656;">
+                <a href="ampdb-ds-phiaa" style="text-decoration: none; color: white; font-weight: 500;">by Hydrophilic
+                    Amino Acid Count
+                </a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1%;">
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #2e003e ;">
+                <a href="ampdb-ds-basicaa" style="text-decoration: none; color: white; font-weight: 500;">by Basic Amino
+                    Acid Count</a>
+            </div>
+            <div class="col-sm-3 text-center" style="padding: 0.8%; background-color: #cbdadb;">
+                <a href="ampdb-ds-acidicaa" style="text-decoration: none; color: rgb(6, 79, 60); font-weight: 500;">by
+                    Acidic Amino Acid Count
+                </a>
+            </div>
+        </div>
+    </div>
+    <footer class="mt-3 text-center p-2 text-white"
+        style="position: fixed; background-color: #5A6F80; font-size: small; left: 0; bottom: 0; width: 100%;">
+        © 2023 B&BL, DoAS, IIIT-A, UP-211015, India
+    </footer>
+
+</body>
+
+</html>

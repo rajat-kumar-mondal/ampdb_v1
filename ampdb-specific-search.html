@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <title>AMPDB Specific Search</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="midilizer.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-3" href="ampdb-home">AMPDB v1</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-home">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button"
+                            data-bs-toggle="dropdown">Search</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="ampdb-text-search">Text Search</a></li>
+                            <li><a class="dropdown-item" href="ampdb-specific-search">Specific Text Search</a></li>
+                            <li><a class="dropdown-item" href="ampdb-target-organism-search">Search by Target
+                                    Organism</a></li>
+                            <li><a class="dropdown-item" href="ampdb-pp-search">Search by Physicochemical Properties</a>
+                            </li>
+                            <li><a class="dropdown-item" href="ampdb-composition-search">Search by Protein
+                                    Composition</a>
+                            </li>
+                            <li><a class="dropdown-item" href="ampdb-activity-search">Search by Activity</a></li>
+                            <li><a class="dropdown-item" href="ampdb-advanced-search">Advanced Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="browse-all-data">Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-classification">Classification</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Tools</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                    href="https://ampdb-protein-sequence-alignment-toolbox.streamlit.app/"
+                                    target="_blank">Protein Sequence Alignment Toolbox</a></li>
+                            <li><a class="dropdown-item"
+                                    href="https://ampdb-protein-feature-calculation-toolbox.streamlit.app/"
+                                    target="_blank">Protein Feature Calculation Toolbox</a></li>
+                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-data-stat">Statistics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-downloads">Downloads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-news">News/Updates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="developers">Developers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ampdb-tutorial">Tutorial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact">Contact</a>
+                    </li>
+                </ul>
+                <form class="d-flex" action="ampdb-quick-search-result" method="get">
+                    <input name="term" class="form-control me-2" type="text" placeholder="Quick Search">
+                    <input type="submit" value="Search" name="search" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </nav>
+    <br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm text-center" style="margin-top: 2%;">
+                <h4 style="font-weight: 500; color: #9A3863;">AMPDB Specific Search</h4>
+            </div>
+        </div>
+    </div>
+    <div class="container-c" style="height: 53%;">
+        <div class="container" style="margin-top: 10%;">
+            <div class="row">
+                <div class="col-sm text-center mb-1">
+                    <h1 style="font-weight: 500;">Find Your AMP More Specifically</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <form id="search-form" action="ampdb-specific-search-result" method="get">
+                        <div class="pt-1" style="text-align: center;">
+                            <input name="term" class="form-control" type="text" class="p-1 w-100" style="margin-left: auto; margin-right: auto; border-radius: 0%; width: 100%; padding: 0.8% 0.8% 0.8% 1.5%; border-radius: 25px; font-size: large;
+                                border: 2px solid gray;
+                                ">
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" value="AMPDB Search" name="search" class="btn btn-success mt-2">
+                            &nbsp;
+                            <button type="button" class="btn btn-warning mt-2" data-bs-toggle="modal"
+                                data-bs-target="#myModal2">
+                                Choose a Dataset
+                            </button>
+                            <div class="modal" id="myModal2">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Choose a Dataset</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div style="text-align: left;">
+                                                <div>This option is for search restriction. By choosing a specific
+                                                    dataset,
+                                                    users can restrict the search in only that dataset. Currently 92
+                                                    datasets
+                                                    are available.</div>
+                                                <br>
+                                                <label for="ds" class="form-label">Select a specific dataset</label>
+                                                <select class="form-select" id="ds" name="ds">
+                                                    <option value="master[59122">AMPDB v1 Master Dataset (Default)
+                                                        [59122
+                                                        record(s) available]</option>
+                                                    <option value='`Acyltransferase dataset.tsv`[1'>Acyltransferase
+                                                        peptide
+                                                        dataset [1 record(s) available]</option>
+                                                    <option value='`Amphibian defense peptide dataset.tsv`[1187'>
+                                                        Amphibian
+                                                        defense peptide dataset [1187 record(s) available]</option>
+                                                    <option value='`Anti-biofilm dataset.tsv`[51'>Anti-biofilm peptide
+                                                        dataset [51 record(s) available]</option>
+                                                    <option value='`Anti-cancer dataset.tsv`[51'>Anti-cancer peptide
+                                                        dataset
+                                                        [51 record(s) available]</option>
+                                                    <option value='`Anti-candida dataset.tsv`[420'>Anti-candida peptide
+                                                        dataset [420 record(s) available]</option>
+                                                    <option value='`Anti-gram-negative dataset.tsv`[5800'>
+                                                        Anti-gram-negative
+                                                        peptide dataset [5800 record(s) available]</option>
+                                                    <option value='`Anti-gram-positive dataset.tsv`[2238'>
+                                                        Anti-gram-positive
+                                                        peptide dataset [2238 record(s) available]</option>
+                                                    <option value='`Anti-hepatities dataset.tsv`[2'>Anti-hepatities
+                                                        peptide
+                                                        dataset [2 record(s) available]</option>
+                                                    <option value='`Anti-HIV dataset.tsv`[46'>Anti-HIV peptide dataset
+                                                        [46
+                                                        record(s) available]</option>
+                                                    <option value='`Anti-HSV dataset.tsv`[11'>Anti-HSV peptide dataset
+                                                        [11
+                                                        record(s) available]</option>
+                                                    <option value='`Anti-inflammatory dataset.tsv`[17'>Anti-inflammatory
+                                                        peptide dataset [17 record(s) available]</option>
+                                                    <option value='`Anti-listeria dataset.tsv`[31'>Anti-listeria peptide
+                                                        dataset [31 record(s) available]</option>
+                                                    <option value='`Anti-malarial dataset.tsv`[2'>Anti-malarial peptide
+                                                        dataset [2 record(s) available]</option>
+                                                    <option value='`Anti-mollicute dataset.tsv`[3'>Anti-mollicute
+                                                        peptide
+                                                        dataset [3 record(s) available]</option>
+                                                    <option value='`Anti-MRSA dataset.tsv`[80'>Anti-MRSA peptide dataset
+                                                        [80
+                                                        record(s) available]</option>
+                                                    <option value='`Anti-parasititic dataset.tsv`[100'>Anti-parasititic
+                                                        peptide dataset [100 record(s) available]</option>
+                                                    <option value='`Anti-plasmodium dataset.tsv`[7'>Anti-plasmodium
+                                                        peptide
+                                                        dataset [7 record(s) available]</option>
+                                                    <option value='`Anti-protozoal dataset.tsv`[40'>Anti-protozoal
+                                                        peptide
+                                                        dataset [40 record(s) available]</option>
+                                                    <option value='`Anti-tuberculosis dataset.tsv`[744'>
+                                                        Anti-tuberculosis
+                                                        peptide dataset [744 record(s) available]</option>
+                                                    <option value='`Anti-uterotonic dataset.tsv`[1'>Anti-uterotonic
+                                                        peptide
+                                                        dataset [1 record(s) available]</option>
+                                                    <option value='`Anti-yeast dataset.tsv`[79'>Anti-yeast peptide
+                                                        dataset
+                                                        [79 record(s) available]</option>
+                                                    <option value='`Antibiotic dataset.tsv`[18067'>Antibiotic peptide
+                                                        dataset [18067 record(s) available]</option>
+                                                    <option value='`Antimicrobial dataset.tsv`[59122'>Antimicrobial
+                                                        peptide
+                                                        dataset [59122 record(s) available]</option>
+                                                    <option value='`Antinociceptive dataset.tsv`[1'>Antinociceptive
+                                                        peptide
+                                                        dataset [1 record(s) available]</option>
+                                                    <option value='`Antioxidant dataset.tsv`[356'>Antioxidant peptide
+                                                        dataset [356 record(s) available]</option>
+                                                    <option value='`Antiviral protein dataset.tsv`[33'>Antiviral protein
+                                                        peptide dataset [33 record(s) available]</option>
+                                                    <option value='`Aspartyl esterase dataset.tsv`[1'>Aspartyl esterase
+                                                        peptide dataset [1 record(s) available]</option>
+                                                    <option value='`Autophagy dataset.tsv`[9'>Autophagy peptide dataset
+                                                        [9
+                                                        record(s) available]</option>
+                                                    <option value='`Bacteriocin dataset.tsv`[4411'>Bacteriocin peptide
+                                                        dataset [4411 record(s) available]</option>
+                                                    <option value='`Bacteriolytic enzyme dataset.tsv`[35630'>
+                                                        Bacteriolytic
+                                                        enzyme peptide dataset [35630 record(s) available]</option>
+                                                    <option
+                                                        value='`Blood coagulation cascade inhibiting toxin dataset.tsv`[9'>
+                                                        Blood coagulation cascade inhibiting toxin peptide dataset [9
+                                                        record(s) available]</option>
+                                                    <option value='`Carboxypeptidase dataset.tsv`[1'>Carboxypeptidase
+                                                        peptide dataset [1 record(s) available]</option>
+                                                    <option value='`Cell membrane dataset.tsv`[30'>Cell membrane peptide
+                                                        dataset [30 record(s) available]</option>
+                                                    <option value='`Chemotaxis dataset.tsv`[32'>Chemotaxis peptide
+                                                        dataset
+                                                        [32 record(s) available]</option>
+                                                    <option value='`Cytokine dataset.tsv`[11'>Cytokine peptide dataset
+                                                        [11
+                                                        record(s) available]</option>
+                                                    <option value='`Cytolysis dataset.tsv`[2329'>Cytolysis peptide
+                                                        dataset
+                                                        [2329 record(s) available]</option>
+                                                    <option value='`Cytolytic dataset.tsv`[52'>Cytolytic peptide dataset
+                                                        [52
+                                                        record(s) available]</option>
+                                                    <option value='`Cytotoxin dataset.tsv`[2727'>Cytotoxin peptide
+                                                        dataset
+                                                        [2727 record(s) available]</option>
+                                                    <option value='`Defensin dataset.tsv`[4726'>Defensin peptide dataset
+                                                        [4726 record(s) available]</option>
+                                                    <option value='`DNA replication inhibitor dataset.tsv`[2'>DNA
+                                                        replication inhibitor peptide dataset [2 record(s) available]
+                                                    </option>
+                                                    <option value='`DNA-directed RNA polymerase dataset.tsv`[3'>
+                                                        DNA-directed
+                                                        RNA polymerase peptide dataset [3 record(s) available]</option>
+                                                    <option value='`Endonuclease dataset.tsv`[267'>Endonuclease peptide
+                                                        dataset [267 record(s) available]</option>
+                                                    <option value='`Enzyme inhibitor dataset.tsv`[101'>Enzyme inhibitor
+                                                        peptide dataset [101 record(s) available]</option>
+                                                    <option value='`Exonuclease dataset.tsv`[3'>Exonuclease peptide
+                                                        dataset
+                                                        [3 record(s) available]</option>
+                                                    <option value='`Fungicide dataset.tsv`[4391'>Fungicide peptide
+                                                        dataset
+                                                        [4391 record(s) available]</option>
+                                                    <option value='`Glycosidase dataset.tsv`[20322'>Glycosidase peptide
+                                                        dataset [20322 record(s) available]</option>
+                                                    <option value='`Helicase dataset.tsv`[2'>Helicase peptide dataset [2
+                                                        record(s) available]</option>
+                                                    <option value='`Hemolytic dataset.tsv`[867'>Hemolytic peptide
+                                                        dataset
+                                                        [867 record(s) available]</option>
+                                                    <option value='`Hydrolase dataset.tsv`[25578'>Hydrolase peptide
+                                                        dataset
+                                                        [25578 record(s) available]</option>
+                                                    <option value='`Hypotensive dataset.tsv`[2'>Hypotensive peptide
+                                                        dataset
+                                                        [2 record(s) available]</option>
+                                                    <option value='`Ichthyotoxic dataset.tsv`[7'>Ichthyotoxic peptide
+                                                        dataset [7 record(s) available]</option>
+                                                    <option value='`Insecticidal dataset.tsv`[62'>Insecticidal peptide
+                                                        dataset [62 record(s) available]</option>
+                                                    <option value='`Isomerase dataset.tsv`[2'>Isomerase peptide dataset
+                                                        [2
+                                                        record(s) available]</option>
+                                                    <option value='`Kinase dataset.tsv`[21' style="display: none;">
+                                                        Kinase peptide dataset [21
+                                                        record(s) available]</option>
+                                                    <option value='`Lantibiotic dataset.tsv`[530'>Lantibiotic peptide
+                                                        dataset [530 record(s) available]</option>
+                                                    <option value='`Lectin dataset.tsv`[235'>Lectin peptide dataset [235
+                                                        record(s) available]</option>
+                                                    <option value='`Ligase dataset.tsv`[2'>Ligase peptide dataset [2
+                                                        record(s) available]</option>
+                                                    <option value='`Lyase dataset.tsv`[162'>Lyase peptide dataset [162
+                                                        record(s) available]</option>
+                                                    <option value='`Metalloenzyme inhibitor dataset.tsv`[5'>
+                                                        Metalloenzyme
+                                                        inhibitor peptide dataset [5 record(s) available]</option>
+                                                    <option value='`Metalloprotease dataset.tsv`[5'>Metalloprotease
+                                                        peptide
+                                                        dataset [5 record(s) available]</option>
+                                                    <option value='`Metalloprotease inhibitor dataset.tsv`[5'>
+                                                        Metalloprotease inhibitor peptide dataset [5 record(s)
+                                                        available]
+                                                    </option>
+                                                    <option value='`Methyltransferase dataset.tsv`[3'>Methyltransferase
+                                                        peptide dataset [3 record(s) available]</option>
+                                                    <option value='`Milk protein dataset.tsv`[10'>Milk protein peptide
+                                                        dataset [10 record(s) available]</option>
+                                                    <option value='`Non-hemolytic protein dataset.tsv`[58255'
+                                                        style="display: none;">
+                                                        Non-hemolytic
+                                                        protein peptide dataset [58255 record(s) available]</option>
+                                                    <option value='`Non-ribosomal protein dataset.tsv`[59118'
+                                                        style="display: none;">
+                                                        Non-ribosomal
+                                                        protein peptide dataset [59118 record(s) available]</option>
+                                                    <option value='`Nuclease dataset.tsv`[272'>Nuclease peptide dataset
+                                                        [272
+                                                        record(s) available]</option>
+                                                    <option value='`Nucleotidyltransferase dataset.tsv`[5'>
+                                                        Nucleotidyltransferase peptide dataset [5 record(s) available]
+                                                    </option>
+                                                    <option value='`Oxidoreductase dataset.tsv`[262'>Oxidoreductase
+                                                        peptide
+                                                        dataset [262 record(s) available]</option>
+                                                    <option value='`Peroxidase dataset.tsv`[70'>Peroxidase peptide
+                                                        dataset
+                                                        [70 record(s) available]</option>
+                                                    <option value='`Plant defense dataset.tsv`[1158'>Plant defense
+                                                        peptide
+                                                        dataset [1158 record(s) available]</option>
+                                                    <option
+                                                        value='`Platelet aggregation inhibiting toxin dataset.tsv`[16'>
+                                                        Platelet aggregation inhibiting toxin peptide dataset [16
+                                                        record(s)
+                                                        available]</option>
+                                                    <option value='`Protease dataset.tsv`[114'>Protease peptide dataset
+                                                        [114
+                                                        record(s) available]</option>
+                                                    <option value='`Protease inhibitor dataset.tsv`[100'>Protease
+                                                        inhibitor
+                                                        peptide dataset [100 record(s) available]</option>
+                                                    <option value='`Protein kinase inhibitor dataset.tsv`[1'>Protein
+                                                        kinase
+                                                        inhibitor peptide dataset [1 record(s) available]</option>
+                                                    <option value='`Protein synthesis inhibitor dataset.tsv`[7'>Protein
+                                                        synthesis inhibitor peptide dataset [7 record(s) available]
+                                                    </option>
+                                                    <option value='`Proteolytic dataset.tsv`[13'>Proteolytic peptide
+                                                        dataset
+                                                        [13 record(s) available]</option>
+                                                    <option value='`Ribosomal protein dataset.tsv`[4'>Ribosomal protein
+                                                        peptide dataset [4 record(s) available]</option>
+                                                    <option value='`RNA-directed DNA polymerase dataset.tsv`[3'>
+                                                        RNA-directed
+                                                        DNA polymerase peptide dataset [3 record(s) available]</option>
+                                                    <option value='`Rotamase dataset.tsv`[1'>Rotamase peptide dataset [1
+                                                        record(s) available]</option>
+                                                    <option value='`Serine protease dataset.tsv`[15'>Serine protease
+                                                        peptide
+                                                        dataset [15 record(s) available]</option>
+                                                    <option value='`Serine protease inhibitor dataset.tsv`[91'>Serine
+                                                        protease inhibitor peptide dataset [91 record(s) available]
+                                                    </option>
+                                                    <option value='`Serine threonine-protein kinase dataset.tsv`[11'>
+                                                        Serine
+                                                        threonine-protein kinase peptide dataset [11 record(s)
+                                                        available]
+                                                    </option>
+                                                    <option value='`Signal peptide dataset.tsv`[94'>Signal peptide
+                                                        dataset
+                                                        [94 record(s) available]</option>
+                                                    <option value='`Spermicidal dataset.tsv`[17'>Spermicidal peptide
+                                                        dataset
+                                                        [17 record(s) available]</option>
+                                                    <option value='`Synergistic peptide dataset.tsv`[22'>Synergistic
+                                                        peptide
+                                                        dataset [22 record(s) available]</option>
+                                                    <option value='`Thiol protease dataset.tsv`[79'>Thiol protease
+                                                        peptide
+                                                        dataset [79 record(s) available]</option>
+                                                    <option value='`Thiol protease inhibitor dataset.tsv`[6'>Thiol
+                                                        protease
+                                                        inhibitor peptide dataset [6 record(s) available]</option>
+                                                    <option value='`Toxin dataset.tsv`[465'>Toxin peptide dataset [465
+                                                        record(s) available]</option>
+                                                    <option value='`Transferase dataset.tsv`[50'>Transferase peptide
+                                                        dataset
+                                                        [50 record(s) available]</option>
+                                                    <option value='`Tumor suppressor dataset.tsv`[1'>Tumor suppressor
+                                                        peptide dataset [1 record(s) available]</option>
+                                                    <option value='`Wound healing dataset.tsv`[6'>Wound healing peptide
+                                                        dataset [6 record(s) available]</option>
+                                                </select>
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                data-bs-dismiss="modal">Done</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            &nbsp;
+                            <input type="reset" value="Reset" class="btn btn-danger mt-2">
+                            &nbsp;
+                            <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal"
+                                data-bs-target="#myModal">
+                                AMPDB Help
+                            </button>
+
+                        </div>
+                    </form>
+                    <div class="text-center p-2">Example: Defensin, Drosocin, Human</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">AMPDB Help</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: left;"><b style="font-weight: 500; font-size: larger;">AMPDB Specific Search
+                            Facility</b></div>
+                    <div style="text-align: justify;">This is a specific search facility (the
+                        search can also be restricted by clicking on 'Choose
+                        a Dataset' option). This
+                        search facility returns those entries which are exactly match with the
+                        search term. This search facility is case insensitive.
+                        Here one can search with followings.
+                    </div>
+                    <div class="text-start" style="font-size: small;">1. AMPDB ID (e.g., AMPDB_101)
+                    </div>
+                    <div class="text-start" style="font-size: small;">2. AMP from a Organism (e.g.,
+                        Drosophila melanogaster (Fruit fly))</div>
+                    <div class="text-start" style="font-size: small;">3. AMP name (e.g., Defensin)
+                    </div>
+                    <div class="text-start" style="font-size: small;">4. Gene name of any AMP (e.g.,
+                        LBP)</div>
+                    <div class="text-start" style="font-size: small;">5. AMP Sequence (e.g.,
+                        'MKLSTSLLAIVAVA') <br><span
+                            style="font-size: smaller; color: #121259; font-weight: 500;"><i>Note:
+                                This is not BLAST search</i></span></div>
+                    <div class="text-start" style="font-size: small;">6. Existence level of a
+                        protein (e.g., Inferred from homology)</div>
+                    <div class="text-start" style="font-size: small;">7. Target-organism (e.g.,
+                        E.coli) <br><span style="font-size: smaller; color: #121259; font-weight: 500;"><i>Note:
+                                "Search by Target Organism"
+                                search facility can also be use for more refine target organism
+                                search.</i></span></div>
+                    <div class="text-start" style="font-size: small;">8. Antimicrobial activity of
+                        an AMP (e.g., Fungicide)</div>
+                    <div class="text-start" style="font-size: small;">9. Enzymatic activity of an
+                        AMP (e.g., Protease)</div>
+                    <div class="text-start" style="font-size: small;">10. Inhibitory activity of an
+                        AMP (e.g., Protease inhibitor)</div>
+                    <div class="text-start" style="font-size: small;">11. Other biological activity
+                        (e.g., Cytokine) <br><span
+                            style="font-size: smaller; color: #121259; font-weight: 500;"><i>Note:
+                                "Search by
+                                Activity" search facility can also be use for more refine 8 to 11
+                                related search.</i></span></div>
+                    <div class="text-start" style="font-size: small;">12. PubMed ID (e.g., 25342741)
+                    </div>
+                    <div class="text-start" style="font-size: small;">13. PDB ID (e.g., 2MN5)</div>
+                    <div class="text-start" style="font-size: small;">14. IntAct ID (e.g., O16829)
+                    </div>
+                    <div class="text-start" style="font-size: small;">15. STRING ID (e.g.,
+                        9606.ENSP00000249330)</div>
+                    <div class="text-start" style="font-size: small;">16. MINT ID (e.g., O60814)
+                    </div>
+                    <div class="text-start" style="font-size: small;">17. DIP ID (e.g., DIP-26293N)
+                    </div>
+                    <div class="text-start" style="font-size: small;">18. BioGRID ID (e.g., 124439)
+                    </div>
+                    <div class="text-start" style="font-size: small;">19. BindingDB ID (e.g.,
+                        P00697)</div>
+                    <div class="text-start" style="font-size: small;">20. ChEMBL ID (e.g.,
+                        CHEMBL2297)</div>
+                    <div class="text-start" style="font-size: small;">21. DrugBank ID(e.g., DB06934)
+                    </div>
+                    <div class="text-start" style="font-size: small;">22. GeneID (e.g., 1258585)
+                    </div>
+                    <div class="text-start" style="font-size: small;">23. KEGG ID (e.g., vg:1258585)
+                    </div>
+                    <div class="text-start" style="font-size: small;">24. Ensembl (e.g.,
+                        ENSMGAT00000011853)</div>
+                    <div class="text-start" style="font-size: small;">25. GeneTree ID (e.g.,
+                        ENSGT00940000153832)</div>
+                    <div class="text-start" style="font-size: small;">26. BRENDA ID (e.g., 3.2.1.17)
+                    </div>
+                    <div class="text-start" style="font-size: small;">27. BioCyc ID (e.g.,
+                        ARA:AT3G12500-MON)</div>
+                    <div class="text-start" style="font-size: small;">28. RNAct ID (e.g., P20160)
+                    </div>
+                    <div class="text-start" style="font-size: small;">29. PANTHER ID (e.g.,
+                        PTHR10206)</div>
+                    <div class="text-start" style="font-size: small;">30. PROSITE ID (e.g., PS00946)
+                    </div>
+                    <div class="text-start" style="font-size: small;">31. InterPro ID (e.g.,
+                        IPR018216)</div>
+                    <div class="text-start" style="font-size: small;">32. EMBL ID (e.g., Y09471)
+                    </div>
+                    <div class="text-start" style="font-size: small;">33. GenBank ID (e.g.,
+                        BC142014)</div>
+                    <div class="text-start" style="font-size: small;">34. CCDS ID (e.g.,
+                        CCDS12044.1)</div>
+                    <div class="text-start" style="font-size: small;">35. RefSeq ID (e.g.,
+                        NP_001691.1)</div>
+                    <div class="text-start" style="font-size: small;">36. UniProt ID (e.g., P19171)
+                        <br><span style="font-size: smaller; color: #121259; font-weight: 500;"><i>Note:
+                                "Advanced Search"
+                                facility can also be use for more refine 12 to 36 related
+                                search..</i></span>
+                    </div>
+                    <div class="text-start" style="font-size: small;">37. Taxonomy lineage (e.g., Plant)</div>
+                    <div class="text-start" style="font-size: small; display: none;"> (e.g., )</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="mt-3 text-center p-2 text-white"
+        style="position: fixed; background-color: #5A6F80; font-size: small; left: 0; bottom: 0; width: 100%;">
+        © 2023 B&BL, DoAS, IIIT-A, UP-211015, India
+    </footer>
+</body>
+
+</html>
